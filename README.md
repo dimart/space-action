@@ -1,6 +1,6 @@
 # Space – GitHub Action
 
-This action allows to report build status for a commit to Space.
+This action allows to report build status for a commit to Space
 
 ## Basic Usage
 
