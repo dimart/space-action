@@ -18,7 +18,3 @@ runs:
         space-token: ${{ secrets.SPACE_TOKEN }}
         space-project-key: XXX
         state: ${{ inputs.state }}
-
-        # for this repo only since dimart.jetbrains.space is not setup to mirror this repo
-        repository: fun-with-actions
-        revision: a0eaad1be5fd94876f901842e0639cd9c4c9ea50
