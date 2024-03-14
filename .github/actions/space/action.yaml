@@ -16,5 +16,5 @@ runs:
       with:
         space-org: dimart
         space-token: ${{ secrets.SPACE_TOKEN }}
-        space-project-key: XXX
+        space-project-key: SPACE-PROJECT-KEY
         state: ${{ inputs.state }}
