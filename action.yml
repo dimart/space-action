@@ -1,0 +1,47 @@
+# [TODO: proofread]
+name: 'Space GitHub Action'
+description: 'Send build status to Space'
+author: 'JetBrains'
+
+# [TODO: proofread]
+# For GitHub Marketplace.
+branding:
+  icon: 'heart'
+  color: 'red'
+
+inputs:
+  space-org:
+    description: 'The domain of a registered Space organization'
+    required: true
+  space-token:
+    description: 'The token to authenticate with Space'
+    required: true
+  space-project-key:
+    description:
+      'The key of a Space project where repository with the commit is linked'
+    required: true
+  state:
+    description:
+      'The state of the build (one of: scheduled, pending, ready_to_start,
+      failed_to_start, running, failing, succeeded, terminated, failed, hanging)'
+    required: true
+    default: 'successful'
+
+  repository:
+    description:
+      'The name of the repository in the Space project. (default: taken from the
+      action context)'
+    required: false
+  revision:
+    description:
+      'The SHA of a commit to be annotated. (default: taken from the action
+      context)'
+    required: false
+  task-name:
+    description:
+      'The name of the external check to be displayed in Space next to its state'
+    required: false
+
+runs:
+  using: node20
+  main: dist/index.js

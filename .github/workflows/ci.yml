@@ -1,0 +1,100 @@
+name: GitHub Workflow
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  test-typescript:
+    name: TypeScript Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        id: setup-node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - name: Install Dependencies
+        id: npm-ci
+        run: npm ci
+
+      #      - name: Check Format
+      #        id: npm-format-check
+      #        run: npm run format:check
+
+      #      - name: Lint
+      #        id: npm-lint
+      #        run: npm run lint
+
+      - name: Test
+        id: npm-ci-test
+        run: npm run ci-test
+
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - uses: ./.github/actions/space
+        with:
+          state: SCHEDULED
+
+      # some build steps here...
+      - run: sleep 5
+
+      - uses: ./.github/actions/space
+        with:
+          state: RUNNING
+
+      # some build/test steps here
+      - run: sleep 5
+
+      - if: success()
+        uses: ./.github/actions/space
+        with:
+          state: SUCCEEDED
+
+      - if: failure()
+        uses: ./.github/actions/space
+        with:
+          state: FAILED
+
+      - if: cancelled()
+        uses: ./.github/actions/space
+        with:
+          state: TERMINATED
+
+  test-action:
+    name: GitHub Actions Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+
+      - name: Test Local Action
+        id: test-action
+        uses: ./
+        with:
+          space-org: dimart
+          space-token: ${{ secrets.SPACE_TOKEN }}
+          space-project-key: XXX
+          state: SUCCEEDED
+          repository: fun-with-actions
+          revision: a0eaad1be5fd94876f901842e0639cd9c4c9ea50
