@@ -6,7 +6,7 @@ on:
       - dev, main
   push:
     branches:
-      - main
+      - dev, main
 
 permissions:
   contents: read
